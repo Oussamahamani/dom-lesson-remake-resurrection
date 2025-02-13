@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  let cities = [
+  let data = [
     { name: "Boston", temperature: 71 },
     { name: "New York", temperature: 75 },
     { name: "Los Angeles", temperature: 80 },
@@ -12,7 +12,7 @@ function App() {
     { name: "Houston", temperature: 90 },
     { name: "Denver", temperature: 45 },
   ];
-  cities = cities.map((city) => {
+  data = data.map((city) => {
     city.tempInCelsius = (((city.temperature - 32) * 5) / 9).toFixed(2);
     city.tempInFahrenheit = city.temperature;
     city.color = city.tempInCelsius > 20 ? "red" : "blue";
@@ -21,6 +21,10 @@ function App() {
     delete city.temperature;
     return city;
   });
+
+
+  const [cities,setCities]=useState(data)
+
   // filter
   // i made boston bigger
   //convert the temp to c
@@ -29,6 +33,21 @@ function App() {
 
   const switchTemp = (index) => {
     console.log("hello", index);
+    // if(cities[index].isCelsius ){
+    //   cities[index].isCelsius  = false
+    // }else{
+    //   cities[index].isCelsius  = true
+    // }
+    // {...obj}
+    // [...cities]
+    let updatedCities = cities.slice()
+
+
+    updatedCities[index].isCelsius = !updatedCities[index].isCelsius
+    
+    setCities(updatedCities)
+
+    console.log(cities[index])
   };
 
   return (
