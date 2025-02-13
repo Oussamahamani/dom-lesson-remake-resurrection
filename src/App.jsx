@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  let cities = [
+    { name: "Boston", temperature: 71 },
+    { name: "New York", temperature: 75 },
+    { name: "Los Angeles", temperature: 80 },
+    { name: "Chicago", temperature: 65 },
+    { name: "Houston", temperature: 90 },
+    { name: "Denver", temperature: 45 },
+  ];
+  cities = cities.map((city) => {
+    city.tempInCelsius = (((city.temperature - 32) * 5) / 9).toFixed(2);
+    city.tempInFahrenheit = city.temperature;
+    city.color = city.tempInCelsius > 20 ? "red" : "blue";
+    city.isCelsius = false;
+
+    delete city.temperature;
+    return city;
+  });
+  // filter
+  // i made boston bigger
+  //convert the temp to c
+  // we colored the cities based on their temp
+  //we deleted the city if it was too hot if it has temperature above 30
+
+  const switchTemp = (index) => {
+    console.log("hello", index);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {cities.map((city, index) => (
+        <>
+          {/* ? :  */}
+          {city.tempInCelsius < 30 && (
+            <div
+              key={city.name}
+              className={city.tempInCelsius > 20 ? "hot" : "cold"}
+            >
+              <li style={{ fontSize: 24 - index * 2 }}> {city.name}</li>
+              {city.isCelsius ? (
+                <li> {city.tempInCelsius} c</li>
+              ) : (
+                <li> {city.tempInFahrenheit} f</li>
+              )}
+
+              <button onClick={() => switchTemp(index)}>Temp Toggle </button>
+            </div>
+          )}
+        </>
+      ))}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
